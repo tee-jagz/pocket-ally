@@ -32,7 +32,7 @@ Use the measured timings as planning evidence, not a latency promise: the latest
 
 - **Idea/usefulness:** show the transition from everyday observations to a useful reply, with less retyping and clear user control.
 - **Use of Codex:** solo human builder, Astra orchestration and requested parallel GPT-6.1 Sol HIGH backend/frontend implementation. A concrete example is the reply-save bug: browser QA found that a new draft lost its case association, and a SQLite reread regression verified the fix. Exact approval/attachment-change tests provide a second example.
-- **Execution:** show the working edit, save, review and approval path. The latest backend suite has 150 passing tests, with real provider and CUA verification recorded in CODEX.md.
+- **Execution:** show the working edit, save, review and approval path. The latest backend suite has 151 passing tests, with real provider and CUA verification recorded in CODEX.md.
 - **Demo clarity:** keep one core journey. Use brief API overlays, not long architecture narration. Include actual builder name/contact in the submission, and verify public repository/video access.
 
 ## Verification and historical recording

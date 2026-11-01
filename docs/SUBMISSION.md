@@ -3,7 +3,7 @@
 The [Builders Guide](https://warp-peach-ef6.notion.site/) was read through CUA on 1 November. Submit by **17:00 Europe/London** using the [event submission form](https://hack.outpostcrew.co/e/devday-hack-london-49b733). The four equally weighted criteria are the idea/usefulness, use of Codex, execution and demo clarity. Finalists have a two-minute presentation followed by one minute of questions.
 
 - [x] README describes the product, local setup and the work built during the event.
-- [x] Backend checks pass: latest full suite 150 tests. Actual provider and browser evidence is recorded in CODEX.md.
+- [x] Backend checks pass: latest full suite 151 tests. Actual provider and browser evidence is recorded in CODEX.md.
 - [x] OpenAI generation, extraction, retrieval and synthesis use real configured services. TfL planning is live. Email remains an explicitly approved local outbox copy; no external email delivery is claimed.
 - [x] Final edited-reply browser/outbox check passed in isolated QA: edited subject/body exactly matched one explicitly approved local email copy.
 - [ ] Record the current working core journey in at most 90 seconds. The existing 82.44-second video shows the superseded interface and is historical only.

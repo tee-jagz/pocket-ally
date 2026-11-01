@@ -54,6 +54,7 @@ def validate_sentences(items,context):
         ids=row['source_ids'];quotes=row['evidence_quotes'];text=row['text'].strip()
         if len(ids)!=len(quotes) or len(set(ids))!=len(ids) or any(id not in known for id in ids): raise ValueError('Cite only retrieved source IDs with corresponding exact quotes')
         if any(not quote.strip() or quote not in known[id]['text'] for id,quote in zip(ids,quotes)): raise ValueError('Evidence quotes must match the cited source exactly')
+        if re.search(r'\blast night\b',text,re.I): raise ValueError('Omit source-relative last night wording; do not infer its date')
         if re.search(r'\b(?:today|yesterday|tonight|tomorrow)\b',text,re.I) and any(known[id]['date'] not in text for id in ids): raise ValueError('Historical relative-time wording needs an explicit source date anchor')
         if chr(0x2014) in text or re.search(r'\b(?:should|recommend|diagnos\w*|treatment|medication|prognosis|eligible|refund|clinical|cancer|worsen\w*|improv\w*)\b|https?://|@',text,re.I): raise ValueError('No advice, clinical interpretation or unsupported outcome claims')
         supported=words(' '.join(quotes));claim=words(text)

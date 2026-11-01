@@ -137,3 +137,11 @@ def test_bench_rest_is_not_wellbeing_and_appointment_missing_facts_are_preserved
     assert reports_wellbeing('I felt rested after sleeping well.')
     event={'text':'How have you been? Your appointment will be sometime next week.','interpretation':{'intent':'appointment','missing_info':[{'id':'appointment-date'}]}}
     assert wellbeing_gap(event,[]) is None
+
+
+def test_historical_last_night_is_never_carried_into_generated_reply(tmp_path):
+    run=ready_run(Store(tmp_path),'SYNTHETIC. How have you been this past week?')
+    run.case['context']=[{'note_id':'wellbeing-synthetic','date':'2026-10-31','text':'I slept well last night. I felt calm after a quiet afternoon.','source':'/api/notes/wellbeing-synthetic'}]
+    items=[{'text':'I slept well last night.','source_ids':['wellbeing-synthetic'],'evidence_quotes':['I slept well last night.']}]
+    with pytest.raises(ValueError,match='relative'): run.wellbeing('Answer with the dated observation.',items)
+    assert run.store.drafts()==[]

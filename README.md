@@ -4,6 +4,20 @@
 
 Built during the DevDay Exchange London Community Hackathon, 1 November 2026. Solo project with Codex. No clinical advice, symptom interpretation, benefits calculation or real patient data.
 
+## A look inside
+
+Current mobile screens, captured from an isolated synthetic store. The check-in is prepared for review; no message has been delivered.
+
+| Home | Tasks | Journal |
+|---|---|---|
+| <img src="docs/screenshots/home.jpg" alt="Home dashboard with a check-in reply ready for review and a journal shortcut" width="230"> | <img src="docs/screenshots/tasks.jpg" alt="Tasks result with a generated check-in summary and dated source links" width="230"> | <img src="docs/screenshots/journal.jpg" alt="Journal with recording, writing, search and saved synthetic entries" width="230"> |
+| The next decision and a direct route to review the exact draft. | Prepared results lead with dated evidence. The editable reply and exact approval controls follow below. | Record or write a note, find saved observations and keep their original wording available. |
+
+| Companion | Demo |
+|---|---|
+| <img src="docs/screenshots/companion.jpg" alt="Companion screen with Soft, Playful and Minimal packaged styles and an editable character prompt" width="230"> | <img src="docs/screenshots/demo.jpg" alt="Separate Demo editor with an editable synthetic incoming message and Send to Pocket Ally button" width="230"> |
+| A packaged Soft style is shown here. Preview a character, then explicitly choose the version to save. | Edit synthetic incoming messages and choose visit or journey context independently of Tasks. **Send to Pocket Ally** starts app preparation, not external email delivery. |
+
 ## Run locally
 
 Requires Python 3.12. All example data is synthetic. The default works without API keys, Google OAuth or a database server.
@@ -105,7 +119,7 @@ The browser is buildless HTML/CSS/minimal JavaScript and uses system fonts witho
 
 ## Demo, submission and attribution
 
-See [the earlier core-build demo record](docs/DEMO.md), [submission checklist](docs/SUBMISSION.md), [Codex decisions and evidence](CODEX.md), and [credits](CREDITS.md). The saved video predates the PWA redesign and is historical. A current core-journey video and public submission links remain to be completed. Generated runtime files and credentials are ignored. Run `python scripts/release_check.py` before publishing.
+See [the demo guide and earlier recording](docs/DEMO.md), [submission checklist](docs/SUBMISSION.md), [Codex decisions and evidence](CODEX.md), and [credits](CREDITS.md). The saved video predates the PWA redesign and is historical. A current core-journey video and public submission links remain to be completed. Generated runtime files and credentials are ignored. Run `python scripts/release_check.py` before publishing.
 
 The public GitHub repository and externally accessible demo-video URL must be added after publishing with your account. No public URL is claimed by this checkout.
 
