@@ -84,9 +84,24 @@ def test_transcription_and_embeddings_have_no_automatic_retry(monkeypatch,tmp_pa
     monkeypatch.setattr(openai,'OpenAI',constructor)
     audio=tmp_path/'synthetic.wav';audio.write_bytes(b'synthetic fixture bytes')
     assert integrations.transcribe(audio)=='Synthetic diary words'
+    assert client.audio.transcriptions.create.call_args.kwargs['language']=='en'
     assert client.audio.transcriptions.create.call_args.kwargs['file'].closed
     assert integrations.embed('Synthetic words')==[0.25,0.75]
     assert all(call.kwargs['max_retries']==0 for call in constructor.call_args_list)
+
+def test_companion_image_adapter_requests_png_and_rejects_invalid_content(monkeypatch):
+    import openai
+    from app import integrations
+    constructor=MagicMock();client=constructor.return_value
+    png=b'\x89PNG\r\n\x1a\nsynthetic-fixture'
+    client.images.generate.return_value=SimpleNamespace(data=[SimpleNamespace(b64_json=base64.b64encode(png).decode())])
+    monkeypatch.setattr(openai,'OpenAI',constructor)
+    assert integrations.generate_companion_image('Fictional fox','soft')==png
+    args=client.images.generate.call_args.kwargs
+    assert args['output_format']=='png' and args['background']=='transparent'
+    assert constructor.call_args.kwargs['max_retries']==0
+    client.images.generate.return_value=SimpleNamespace(data=[SimpleNamespace(b64_json=base64.b64encode(b'<script>bad</script>').decode())])
+    with pytest.raises(ValueError): integrations.generate_companion_image('Fictional fox','soft')
 
 def test_agent_exposes_only_draft_and_retrieval_tools(monkeypatch,tmp_path):
     from app import agent

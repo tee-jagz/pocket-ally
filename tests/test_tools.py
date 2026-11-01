@@ -49,7 +49,7 @@ def test_fill_official_pdf_and_no_bank_details(store):
     widgets=[annotation.get_object() for page in reader.pages for annotation in page.get('/Annots',[])]
     assert all(widget.get('/AS') in (None,'/Off') for widget in widgets if widget.get('/FT')=='/Btn')
     assert result['refund_status'] == 'refund not yet confirmed'
-    assert result['estimate'] == '£8.40 estimate — synthetic receipt, subject to verification'
+    assert result['estimate'] == '£8.40 estimate - synthetic receipt, subject to verification'
 
 def test_checklist_and_deadline(store):
     assert claim_deadline('2026-11-30') == '2027-02-28'
@@ -200,3 +200,4 @@ def test_mutating_body_invalidates_approval(store):
 
 def test_status_not_confirmed(store):
     assert status_screen(store)['refund_status'] == 'refund not yet confirmed'
+    assert status_screen(store)['delivery_mode']=='local-outbox'

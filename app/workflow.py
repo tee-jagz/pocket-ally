@@ -1,6 +1,7 @@
 """Ordered workflow: prepare freely, send only from an explicit UI approval."""
 import asyncio, os
 from app import tools as t
+from app.store import LOCK
 
 async def step(store,name,state,fn):
     store.put('mascot',state); store.event('tool-start',name,state)
@@ -35,8 +36,22 @@ async def run_preparation(store):
         store.put('error',f'{type(exc).__name__}: preparation stopped. Check service configuration; no automatic send retry.')
 
 async def approve_and_send(store,id,digest):
-    if store.get('phase') not in ('awaiting-approval','complete'): raise ValueError('Finish preparation before approving')
+    payload=store.draft_payload(id)
+    case_id=payload.get('case_id') if payload else None
+    if case_id:
+        from app.cases import get_case,save_case
+        case=get_case(store,case_id)
+        if case['status'] not in ('ready','complete') or id not in case['draft_ids']: raise ValueError('Review the current prepared case before approving')
+        approved_revision=case['revision']
+    elif store.get('phase') not in ('awaiting-approval','complete'): raise ValueError('Finish preparation before approving')
     store.approve(id,digest)
     await step(store,'Send approved draft','sending',lambda:t.send_message(store,id))
+    if case_id:
+        with LOCK:
+            case=get_case(store,case_id)
+            if case['revision']==approved_revision and case['status'] in ('ready','complete'):
+                if all(draft['result'] for draft in store.drafts() if draft['id'] in case['draft_ids']): case['status']='complete'
+                save_case(store,case)
+        return
     done=all(x['result'] for x in store.drafts())
     store.put('mascot','done' if done else 'waiting'); store.put('phase','complete' if done else 'awaiting-approval')

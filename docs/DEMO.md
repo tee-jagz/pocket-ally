@@ -1,44 +1,42 @@
-# 80-second demo script
+# Current 90-second demo plan
 
-Run locally with synthetic data. Record the browser tab only; hide terminals, credentials and unrelated tabs. Do not claim the local mode sends real emails or calls AI.
+Use synthetic content only. Keep the working notes-to-reply journey central. For a weekly wellbeing reply, first add an explicitly labelled synthetic self-report about how the fictional person felt. Existing walking/stairs fixtures alone should lead to a missing-wellbeing question, not an invented answer. Do not silently inject notes or present text notes as recorded audio. The [Builders Guide](https://warp-peach-ef6.notion.site/) requires a video of at most 90 seconds, with submission by 17:00 Europe/London. Public upload and a current recording remain pending.
 
-| Time | Screen / action | Narration |
+| Time | Show | Short narration or overlay |
 |---|---|---|
-| 0–10s | Landing screen, Ade | “A diagnosis creates enough work. Pocket Ally handles the paperwork around it. This is entirely synthetic.” |
-| 10–22s | Prepare paperwork; mascot reacts | “One forwarded attendance email starts a chain. Each extracted fact keeps its original email line.” |
-| 22–35s | Calendar and claim; open source details | “The next appointment includes travel time. Here’s a partially filled official travel form, a checklist and a payment-based deadline. The refund is only an estimate; bank details stay out.” |
-| 35–48s | Claim message, approve | “Nothing is sent without a separate approval. Today’s offline fallback writes a complete email with attachments to a local outbox.” |
-| 48–61s | Manager message, approve | “The manager gets the date and a fact I already shared, without the hospital name or diagnosis.” |
-| 61–73s | Diary answer; click dated citation and play audio | “When a form asks about stairs or walking, my own notes provide the words. Every sentence links back to its dated source.” |
-| 73–80s | Today’s record, refund pending | “A clear record of what happened, what I approved and what’s still pending. Less admin. More room for you.” |
+| 0–8s | Home and the Journal | “Pocket Ally turns everyday notes into the paperwork and replies people need.” |
+| 8–16s | A synthetic voice note, playable audio and its saved English transcript | “Voice becomes editable text, while the original recording stays available.” Overlay: `Audio transcription: gpt-4o-transcribe`. |
+| 16–22s | Saved generated companion, then Demo | “A familiar visual guide makes the work easier to follow.” Overlay: `Images API: saved generated companion`. |
+| 22–29s | Generate a natural weekly question, then Send to Pocket Ally | “A synthetic incoming email asks how the week has been.” Overlay: `gpt-6-luna: demo message only`. |
+| 29–53s | View activity and actual task progress | “The agent interprets the request, retrieves relevant notes and chooses the safe preparation tools.” Overlay: `Decisions routing → Responses + Agents SDK → sourced reply`. |
+| 53–66s | Composed reply and one dated source | “It combines relevant observations into a reply, with the original sources one click away.” Overlay: `text-embedding-3-small + cited synthesis`. |
+| 66–82s | Edit, Save changes, inspect exact preview and explicitly approve | “I can change the words. Only the exact version I review can be approved.” Show the local-copy label. |
+| 82–90s | Completed local record and concise Codex credit | “This demo saves an approved local email copy. Codex helped build the agent, interface and tests, including a regression that caught a saved-draft persistence bug.” |
 
-If live checks pass, replace the fallback sentence with “This sends only to our throwaway test accounts.” Show test inbox delivery in rehearsal before claiming it in the recording.
+Use the measured timings as planning evidence, not a latency promise: the latest reply run took 24.37 seconds; synthetic message generation took roughly 2–3 seconds. If waiting is edited, label the cut or time compression. Do not present a prerecorded model result as a new live call. If using a saved transcript or image preview, label it as saved earlier. The companion is a visual guide, not a speaking agent or real-time avatar.
 
-Two rehearsals: first check correctness and all source links; second time it under 90 seconds. Save a backup recording locally. Freeze features at 15:45 London, fix only after that, finish rehearsals by 16:30 and upload with time to test anonymous access before 17:00.
+## API map for judges
 
-## Repeat the browser rehearsal
+| Capability | Actual implementation | User benefit and evidence |
+|---|---|---|
+| Output routing | Decisions API with `gpt-6-luna` | Chooses a bounded route from incoming text. Accepted check-in routes select a reply draft or internal summary, subject to validated facts and explicit no-reply instructions. Uncertain results retain an honest fallback. |
+| Interpretation and tool choice | OpenAI Responses API through the Agents SDK, with source-validated extraction | Chooses relevant read, retrieval and preparation tools. No approval/send tools are exposed to the model. |
+| Relevant memory | `text-embedding-3-small` with cosine ranking and dated source links | Finds relevant note content beyond exact keyword matches. Original sources remain reviewable. |
+| Voice notes | Audio transcription with `gpt-4o-transcribe`, explicitly English | Produces editable text while retaining playable audio. This is transcription, not a voice agent. |
+| Visual companion | Images API, default `gpt-image-1-mini` | Generates a visual companion preview that the user explicitly chooses. Actual generated-preview metadata was verified; it is not a conversational avatar. |
+| Demo message generation | `gpt-6-luna`, reasoning effort `none` | Quickly generates realistic synthetic incoming messages from bounded administrative context. It does not run the task automatically. |
+| Journey planning | TfL JourneyResults | Fetches postcode/date-specific plans and updates the same calendar UID. Verified in earlier live QA; omit from this short video rather than distract from the reply journey. Future plans are not guaranteed live departures. |
+| Delivery boundary | Exact digest-bound approval, configured throwaway recipients and local `.eml` outbox | Editing invalidates prior approval. The video must call the result a local copy, not an externally delivered email. |
 
-`scripts/browser_qa.cjs` checks the local journey, individual attachment review, dated audio/transcript sources, separate approvals, saved emails, phone widths and error states. It refuses live mode. It requires Node, Playwright and a Chrome executable; the application itself has no Node dependency.
+## Criteria and Codex example
 
-Install the optional browser tooling under the ignored runtime directory:
+- **Idea/usefulness:** show the transition from everyday observations to a useful reply, with less retyping and clear user control.
+- **Use of Codex:** solo human builder, Astra orchestration and requested parallel GPT-6.1 Sol HIGH backend/frontend implementation. A concrete example is the reply-save bug: browser QA found that a new draft lost its case association, and a SQLite reread regression verified the fix. Exact approval/attachment-change tests provide a second example.
+- **Execution:** show the working edit, save, review and approval path. The latest backend suite has 150 passing tests, with real provider and CUA verification recorded in CODEX.md.
+- **Demo clarity:** keep one core journey. Use brief API overlays, not long architecture narration. Include actual builder name/contact in the submission, and verify public repository/video access.
 
-```bash
-npm install --prefix data/qa-tools playwright
-```
+## Verification and historical recording
 
-With the app running in local mode, run the first rehearsal. Set `CHROME_PATH` to your browser executable; on this Mac it is `/Applications/Google Chrome.app/Contents/MacOS/Google Chrome`.
+Current browser interaction uses CUA against an isolated synthetic store. Verify independent Demo draft state, optional View activity, source citations, generated synthesis, edits surviving refresh, replacement draft digest and exact approved `.eml` content. Do not reset production data or use personal journal content for provider QA.
 
-```bash
-NODE_PATH="$PWD/data/qa-tools/node_modules" CHROME_PATH="/path/to/chrome" node scripts/browser_qa.cjs
-```
-
-For the second rehearsal, stop the app, run `python scripts/reset_demo.py`, and restart it so the initial state is ready. Install Playwright's recording helper, then record the complete journey:
-
-```bash
-PLAYWRIGHT_BROWSERS_PATH="$PWD/data/browser-tools" node data/qa-tools/node_modules/playwright/cli.js install ffmpeg
-NODE_PATH="$PWD/data/qa-tools/node_modules" PLAYWRIGHT_BROWSERS_PATH="$PWD/data/browser-tools" CHROME_PATH="/path/to/chrome" node scripts/browser_qa.cjs --record
-```
-
-Screenshots, results and recordings are saved under ignored `data/browser-qa`. Check the actual duration and playback before upload. The recording has captions and shows synthetic local-outbox approvals; it does not claim external delivery. Browser sandbox permissions may be needed in managed development environments.
-
-The verified recording from this build is `data/browser-qa/rehearsal-2/pocket-ally-demo.webm`: 82.44 seconds, with an identical `pocket-ally-demo-backup.webm` beside it. It is a silent captioned screen recording. The underlying diary player's playback was exercised during verification, but browser audio is not captured in the video. Public upload is still pending.
+The old Playwright browser/case entry points are retired; source contract checks and API tests remain separate. The historical recording is `data/browser-qa/rehearsal-2/pocket-ally-demo.webm`, measured at 82.44 seconds, with an identical backup. It shows the earlier interface and must not be represented as the current app. See `SUBMISSION.md` for pending public links and submission requirements.

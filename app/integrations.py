@@ -47,7 +47,23 @@ def embed(text):
     from openai import OpenAI
     return OpenAI(timeout=20,max_retries=0).embeddings.create(model='text-embedding-3-small',input=text).data[0].embedding
 
+def embed_many(texts):
+    from openai import OpenAI
+    response=OpenAI(timeout=20,max_retries=0).embeddings.create(model='text-embedding-3-small',input=texts)
+    return [row.embedding for row in sorted(response.data,key=lambda row:row.index)]
+
 def transcribe(path):
     from openai import OpenAI
     with Path(path).open('rb') as f:
-        return OpenAI(timeout=30,max_retries=0).audio.transcriptions.create(model='gpt-4o-transcribe',file=f).text
+        return OpenAI(timeout=30,max_retries=0).audio.transcriptions.create(model='gpt-4o-transcribe',file=f,language='en').text
+
+def generate_companion_image(prompt,style):
+    from openai import OpenAI
+    result=OpenAI(timeout=90,max_retries=0).images.generate(
+        model=os.getenv('OPENAI_IMAGE_MODEL','gpt-image-1-mini'),
+        prompt='Create one friendly fictional adult paperwork companion mascot. No text, logos or medical claims. Style: '+style+'. User character idea: '+prompt,
+        size='1024x1024',quality='low',output_format='png',background='transparent',n=1)
+    content=base64.b64decode(result.data[0].b64_json,validate=True)
+    if not content.startswith(b'\x89PNG\r\n\x1a\n') or len(content)>15*1024*1024:
+        raise ValueError('Image provider returned an invalid PNG')
+    return content

@@ -53,7 +53,7 @@ def calendar_event(store,attendance):
         fmt=lambda t:t.astimezone(ZoneInfo('UTC')).strftime('%Y%m%dT%H%M%SZ')
         ics='\r\n'.join(['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Pocket Ally//Synthetic Demo//EN','BEGIN:VEVENT',f'UID:{uid}@pocketally.test',f'DTSTAMP:{fmt(datetime.now(ZoneInfo("UTC")))}',f'DTSTART:{fmt(start)}',f'DTEND:{fmt(end)}','SUMMARY:Personal appointment + travel','LOCATION:'+attendance['hospital']['value'],'DESCRIPTION:Planning estimates: 50 minute travel buffer and 60 minute appointment.','END:VEVENT','END:VCALENDAR',''])
         path=store.root/'next-appointment.ics'; path.write_text(ics)
-        result={'mode':'ICS export only — not added to Google','path':str(path),'url':'/api/calendar.ics','travel_minutes':50,'appointment':appointment.isoformat()}
+        result={'mode':'ICS export only - not added to Google','path':str(path),'url':'/api/calendar.ics','travel_minutes':50,'appointment':appointment.isoformat()}
     store.put('calendar',result); return result
 
 def claim_deadline(payment_date):
@@ -80,7 +80,7 @@ def load_trust(trust_id=None):
 
 def evidence_checklist(store,claim_exists=False,trust_id=None):
     adapter=load_trust(trust_id)
-    claim_label=adapter.get('claim_form_label',f"HC5(T) draft — {adapter['id'].upper()} form still needs verification")
+    claim_label=adapter.get('claim_form_label',f"HC5(T) draft - {adapter['id'].upper()} form still needs verification")
     return [{'id':k,'label':{'attendance':'Proof of attendance','entitlement':'Proof of entitlement','travel':'Proof of travel','claim_form':claim_label}[k],
              'present':claim_exists if k=='claim_form' else (ROOT/f'fixtures/evidence/{k}.txt').exists(),
              'synthetic':True} for k in adapter['required_documents']]
@@ -120,7 +120,7 @@ def fill_claim(store,attendance):
                 raise ValueError('Eligibility and declaration checkbox appearances must remain unchecked')
     result={'path':str(path),'url':'/api/claim.pdf','deadline':claim_deadline(PERSONA['payment_date']),
             'deadline_basis':'Three calendar months from synthetic payment date '+PERSONA['payment_date'],
-            'estimate':f'£{Decimal(PERSONA["travel_paid"]):.2f} estimate — synthetic receipt, subject to verification',
+            'estimate':f'£{Decimal(PERSONA["travel_paid"]):.2f} estimate - synthetic receipt, subject to verification',
             'fare_estimate':'[estimate pending]','refund_status':'refund not yet confirmed',
             'bank_notice':'Bank details are never collected or stored. UCLH will ask directly.',
             'pending_fields':['Date of birth (ambiguous PDF field names)','Signature and declaration','Eligibility verification','UCLH postal form verification'],
@@ -134,7 +134,7 @@ def prepare_claim_email(store,trust_id=None):
     attachments=[claim['path']]+[str(ROOT/f'fixtures/evidence/{k}.txt') for k in adapter['required_documents'] if k!='claim_form']
     evidence=', '.join(k for k in adapter['required_documents'] if k!='claim_form')
     description=('synthetic '+evidence+' evidence and ' if evidence else '')+'an unsigned HC5(T) draft'
-    return store.draft('claim',os.getenv(adapter['destination_env'],'uclh@example.test'),'SYNTHETIC DEMO — travel claim draft',
+    return store.draft('claim',os.getenv(adapter['destination_env'],'uclh@example.test'),'SYNTHETIC DEMO - travel claim draft',
                        f'Test inbox only. Attached are {description}. Not a valid claim. Bank details are intentionally omitted. Refund not yet confirmed.',attachments)
 
 def ingest_diary(store):
@@ -176,7 +176,7 @@ def cited_answer(store,question):
         for text in re.findall(r'[^.!?]+[.!?]?',n['transcript']):
             text=text.strip()
             if text: sentences.append({'text':text,'note_id':n['id'],'date':n['timestamp'][:10],'source':'/api/notes/'+n['id']})
-    result={'question':question,'sentences':sentences,'method':'Extractive draft — source wording retained; review before using on a form.'}
+    result={'question':question,'sentences':sentences,'method':'Extractive draft - source wording retained; review before using on a form.'}
     store.put('answer',result); return result
 
 def assert_private(text):
@@ -195,8 +195,9 @@ def draft_employer(store,attendance):
 def send_message(store,id):
     with LOCK:
         with store.connect() as c:
-            row=c.execute('SELECT payload,approved,result,sending FROM drafts WHERE id=?',(id,)).fetchone()
+            row=c.execute('SELECT payload,approved,result,sending,obsolete FROM drafts WHERE id=?',(id,)).fetchone()
             if not row: raise ValueError('Unknown draft')
+            if row[4]: raise PermissionError('This draft was superseded; review the current case draft')
             p=json.loads(row[0]); allowed_recipient(p['recipient'])
             if row[2]: return json.loads(row[2])
             if row[3]: raise PermissionError('Delivery uncertain or in progress; inspect mailbox before retrying')
@@ -222,7 +223,21 @@ def send_message(store,id):
         store.event('sent',p['kind'],'done',result['delivery']); return result
 
 def status_screen(store):
-    return {'mode':'live integrations' if live() else 'offline synthetic demo','refund_status':'refund not yet confirmed',
+    from app import journal,companion,cases
+    drafts=store.drafts();notes=journal.entries(store)
+    appointment=store.get('attendance',{}).get('next_appointment')
+    dashboard={'journal_count':len(notes),'pending_transcripts':sum(note['transcript_pending'] for note in notes),
+               'drafts_awaiting_review':sum(not draft['result'] for draft in drafts),
+               'completed_tasks':sum(bool(draft['result']) for draft in drafts),
+               'next_appointment':appointment,'summary':'Your synthetic paperwork and journal are saved on this demo server.'}
+    registry=cases.list_cases(store)
+    current=next((case for case in registry['cases'] if case['id']==registry['current_case_id']),None)
+    if current and current.get('appointment'): dashboard['next_appointment']={'value':current['appointment'],'source':'/api/cases/'+current['id']}
+    return {'mode':'live integrations' if live() else 'synthetic task demo',
+            'delivery_mode':'gmail-test' if live() else 'local-outbox','refund_status':'refund not yet confirmed',
             'attendance':store.get('attendance'),'calendar':store.get('calendar'),'claim':store.get('claim'),
             'diary':store.get('diary'),'answer':store.get('answer'),'drafts':store.drafts(),'events':store.events(),
-            'phase':store.get('phase','ready'),'error':store.get('error'),'mascot':store.get('mascot','idle')}
+            'phase':store.get('phase','ready'),'error':store.get('error'),'mascot':store.get('mascot','idle'),
+            'dashboard':dashboard,'journal_count':len(notes),'companion':companion.state(store),
+            'current_case_id':registry['current_case_id'],'current_case':current,'cases':registry['cases'],
+            'capabilities':{'editable_messages':True,'semantic_retrieval':True,'tfl_journey_planning':True,'generated_examples':True}}

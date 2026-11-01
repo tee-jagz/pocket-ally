@@ -1,35 +1,23 @@
-# Submission checklist — 1 November 2026, London
+# Submission checklist: 1 November 2026, London
 
-- [x] Core acceptance tests and a complete local journey pass: 50 Python tests and two clean browser rehearsals.
-- [x] Mode decided: local synthetic fallback; live providers remain unconfigured.
-- [ ] 15:45 feature freeze: fixes only; no TfL or share-card stretch unless already fully done.
-- [ ] README setup tested from a clean environment; credentials excluded.
-- [ ] Public GitHub repository created under the builder's account; source pushed.
-- [x] Run `python scripts/release_check.py`; inspect the staged file list.
-- [ ] Repository link opens in a signed-out/private window without access requests.
-- [x] Two rehearsals completed; final recorded video measures 82.44 seconds.
-- [x] Save a backup local video; SHA-256 matches the final recording.
-- [ ] Upload final video ≤90 seconds.
-- [ ] Video link opens signed-out; playback works without access requests.
-- [x] Give a concrete Codex example: approval bound to exact message/attachment bytes; test changes a file after approval and proves send refusal.
-- [x] Credit the pre-existing NHS form, libraries and documentation; all original app work created during the event. System fonts require no downloaded font assets.
-- [x] List actual team members: solo human builder + Codex assistance.
-- [ ] Submit by 17:00 London. Event source confirms the submission close time.
+The [Builders Guide](https://warp-peach-ef6.notion.site/) was read through CUA on 1 November. Submit by **17:00 Europe/London** using the [event submission form](https://hack.outpostcrew.co/e/devday-hack-london-49b733). The four equally weighted criteria are the idea/usefulness, use of Codex, execution and demo clarity. Finalists have a two-minute presentation followed by one minute of questions.
 
-Public repository URL: not published yet; builder confirmed GitHub is not set up.
-Public video URL: not uploaded yet.
+- [x] README describes the product, local setup and the work built during the event.
+- [x] Backend checks pass: latest full suite 150 tests. Actual provider and browser evidence is recorded in CODEX.md.
+- [x] OpenAI generation, extraction, retrieval and synthesis use real configured services. TfL planning is live. Email remains an explicitly approved local outbox copy; no external email delivery is claimed.
+- [x] Final edited-reply browser/outbox check passed in isolated QA: edited subject/body exactly matched one explicitly approved local email copy.
+- [ ] Record the current working core journey in at most 90 seconds. The existing 82.44-second video shows the superseded interface and is historical only.
+- [ ] Upload the current video and verify signed-out playback without permission requests.
+- [ ] Publish a public GitHub repository with README/setup and what was built today, then verify signed-out access.
+- [ ] Re-run `python scripts/release_check.py` and inspect tracked/staged files before publication. Keep credentials, personal recordings and generated runtime data out of Git.
+- [ ] Include the solo builder's actual full name and contact details. Codex and the requested Astra/Sol agents are development assistance, not additional human team members.
+- [x] Include a concrete Codex example: test-first approval binding to exact message and attachment bytes, including rejection after an attachment changes. A second example is the live-QA-discovered reply persistence bug, corrected with a regression that reloads SQLite rather than asserting only returned memory.
+- [x] Credit the official NHS form, libraries, documentation and generated artwork in CREDITS.md.
+- [ ] If supplying a deployed app link, provide usable access instructions and verify judges can open it. The current Tailscale preview is private, not a public deployment.
+- [ ] Submit before 17:00 London; the form and guide do not themselves authorise publishing or sending on the builder's behalf.
 
-Suggested public-repository commands (after signing in using your usual secure tooling):
+Public repository URL: not published yet.
+Current public video URL: not uploaded yet.
+Builder full name and contact: to be supplied by the builder.
 
-```bash
-git init
-git add .
-git diff --cached --stat
-# Inspect staged contents and run release_check.py before committing.
-git commit -m "Build Pocket Ally synthetic paperwork demo"
-# Create an empty PUBLIC GitHub repository in your account, then:
-git remote add origin git@github.com:YOUR_USER/pocket-ally.git
-git push -u origin HEAD
-```
-
-Do not put API keys in clone URLs, commit messages, issues or the demo video.
+Suggested current video focus: synthetic journal observations, a natural weekly check-in, relevant retrieved context, a composed reply, one edit and exact approval of the local outbox copy. Keep Demo input separate from Tasks results. Show the real working flow and label any edited waiting time; do not imply the approved local copy was emailed externally.

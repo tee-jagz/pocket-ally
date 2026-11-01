@@ -1,0 +1,20 @@
+/* Source/DOM-contract checks only. No browser or application API is contacted. */
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
+const html=fs.readFileSync('static/index.html','utf8'),app=fs.readFileSync('static/app.js','utf8'),css=fs.readFileSync('static/style.css','utf8');
+const tasks=html.slice(html.indexOf('<section id="screen-tasks"'),html.indexOf('<section id="screen-demo"'));
+const demo=html.slice(html.indexOf('<section id="screen-demo"'),html.indexOf('<section id="screen-journal"'));
+for(const id of ['scenario-panel','incoming-editor','incoming-form','incoming-text','incoming-visit','journey-origin','journey-destination','run-incoming','launch']){assert(demo.includes('id="'+id+'"'),id+' must live in Demo');assert(!tasks.includes('id="'+id+'"'),id+' cannot remain in Tasks')}
+for(const id of ['task-guide','case-workspace','progress','workspace'])assert(tasks.includes('id="'+id+'"'));
+const nav=html.slice(html.indexOf('<nav class="bottom-nav"'),html.indexOf('</nav>'));
+const views=[...nav.matchAll(/data-view="([^"]+)"/g)].map(match=>match[1]);assert.deepEqual(views,['home','tasks','journal','companion','demo']);assert.match(css,/grid-template-columns:repeat\(5,minmax\(0,1fr\)\)/);assert.match(css,/\.bottom-nav button\{min-width:0\}/);
+const screens=views.map(view=>({id:'screen-'+view,hidden:view!=='home'}));const buttons=views.map(view=>({dataset:{view},attrs:{},setAttribute(key,value){this.attrs[key]=value},removeAttribute(key){delete this.attrs[key]}}));
+let apiCalls=0,focused='',url='';const fields={'#incoming-text':{value:'Preserved unsent message'},'#incoming-visit':{value:'existing'}};
+const context=vm.createContext({activeView:'home',recorder:null,clearNoteNotice(){},stopJournalAudio(){},stopCaseReplay(){},stopRecording(){},api(){apiCalls++},$:selector=>fields[selector]||{pause(){},focus(){focused=selector}},document:{querySelectorAll(selector){return selector==='.screen'?screens:buttons}},window:{scrollTo(){}},history:{replaceState(a,b,value){url=value}},location:{pathname:'/',search:'?demo-test'}});
+vm.runInContext(app.slice(app.indexOf('function navigate('),app.indexOf('async function refresh()')),context);
+for(const view of views){context.navigate(view,true);assert.equal(context.activeView,view);assert.equal(url,'/?demo-test#'+view);assert.equal(screens.filter(screen=>!screen.hidden).length,1);assert.equal(screens.find(screen=>!screen.hidden).id,'screen-'+view);assert.equal(buttons.filter(button=>button.attrs['aria-current']==='page').length,1);assert.equal(focused,'#screen-'+view+' h1')}
+assert.equal(apiCalls,0);assert.equal(fields['#incoming-text'].value,'Preserved unsent message');assert.equal(fields['#incoming-visit'].value,'existing');
+assert.match(app,/const requestedView = \['home','tasks','journal','companion','demo'\]/);assert.match(app,/if \(\['home','tasks','journal','companion','demo'\]\.includes\(view\)\) navigate\(view\)/);
+const cases=fs.readFileSync('static/cases.js','utf8');
+const send=cases.slice(cases.indexOf('async function sendDemoMessage()'),cases.indexOf('async function generateExampleMessage()'));
+assert.doesNotMatch(send,/navigate\(/);const legacy=app.slice(app.indexOf("$('#start').onclick"),app.indexOf("$('#write-note').onclick"));assert.doesNotMatch(legacy,/navigate\(/);
+const result={source_checks_passed:7,browser_execution:false,checks:['all message/generation/journey inputs moved into Demo','Tasks retains outcomes progress and approval workspace','five equal shrinkable nav columns','all five routes update one visible screen and selected tab','navigation preserves message/visit and calls no API','initial/hash routes accept Demo','all send handlers stay Demo, including legacy fallback'],limits:['Mobile overflow and actual browser interactions remain root CUA verification.']};fs.mkdirSync('data/demo-navigation-qa',{recursive:true});fs.writeFileSync('data/demo-navigation-qa/source-results.json',JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify(result));
