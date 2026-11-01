@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1240" viewBox="0 0 1440 1240" role="img" aria-labelledby="title desc">
+<title id="title">Pocket Ally workflow and APIs</title><desc id="desc">Incoming messages use Responses extraction and Decisions routing. Journal notes, Audio transcription, embeddings and requested TfL plans support an agent-prepared result. The user edits and approves an exact local email copy. Images generate companion previews chosen by the user.</desc>
+<rect width="1440" height="1240" fill="#fbfaf7"/>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#789187"/></marker></defs>
+<text x="720" y="43" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" fill="#173d32">Pocket Ally: how the APIs work together</text>
+<polyline points="720,182 720,210 540,210 540,245" fill="none" stroke="#789187" stroke-width="3" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="720,210 900,210 900,245" fill="none" stroke="#789187" stroke-width="3" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="540,355 540,405 650,405 650,455" fill="none" stroke="#789187" stroke-width="3" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="900,355 900,405 790,405 790,455" fill="none" stroke="#789187" stroke-width="3" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="180,175 180,235" fill="none" stroke="#789187" stroke-width="3" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="180,330 180,400" fill="none" stroke="#789187" stroke-width="3" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="180,475 180,550" fill="none" stroke="#789187" stroke-width="3" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="320,600 380,600 380,510 520,510" fill="none" stroke="#789187" stroke-width="3" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="720,565 720,690" fill="none" stroke="#789187" stroke-width="3" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="720,785 720,860" fill="none" stroke="#789187" stroke-width="3" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="720,955 720,1030" fill="none" stroke="#789187" stroke-width="3" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="1250,175 1250,235" fill="none" stroke="#789187" stroke-width="3" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="1250,330 1250,400" fill="none" stroke="#789187" stroke-width="3" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="920,510 980,510 980,580 1250,580 1250,610" fill="none" stroke="#789187" stroke-width="3" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="1100,665 1010,665 1010,737 920,737" fill="none" stroke="#789187" stroke-width="3" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="520" y="100" width="400" height="82" rx="16" fill="#edf3ec" stroke="#b6c8bd" stroke-width="2"/>
+<text x="720.0" y="141.0" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-size="25" fill="#173d32">Incoming message</text>
+<rect x="390" y="245" width="300" height="110" rx="16" fill="#edf3ec" stroke="#b6c8bd" stroke-width="2"/>
+<text x="540.0" y="284.5" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-size="25" fill="#173d32">Responses API</text>
+<text x="540.0" y="315.5" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="#50685e">Extract validated facts</text>
+<rect x="750" y="245" width="300" height="110" rx="16" fill="#edf3ec" stroke="#b6c8bd" stroke-width="2"/>
+<text x="900.0" y="284.5" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-size="25" fill="#173d32">Decisions API</text>
+<text x="900.0" y="315.5" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="#50685e">Route the request</text>
+<rect x="520" y="455" width="400" height="110" rx="16" fill="#edf3ec" stroke="#b6c8bd" stroke-width="2"/>
+<text x="720.0" y="494.5" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-size="25" fill="#173d32">Agents SDK + Responses</text>
+<text x="720.0" y="525.5" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="#50685e">Choose preparation tools</text>
+<rect x="520" y="690" width="400" height="95" rx="16" fill="#edf3ec" stroke="#b6c8bd" stroke-width="2"/>
+<text x="720.0" y="722.0" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-size="25" fill="#173d32">Sourced result</text>
+<text x="720.0" y="753.0" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="#50685e">Reply, visit plan or paperwork</text>
+<rect x="520" y="860" width="400" height="95" rx="16" fill="#f4eedc" stroke="#b6c8bd" stroke-width="2"/>
+<text x="720.0" y="892.0" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-size="25" fill="#173d32">You review and edit</text>
+<text x="720.0" y="923.0" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="#50685e">Approve the exact copy</text>
+<rect x="520" y="1030" width="400" height="95" rx="16" fill="#dfeadd" stroke="#b6c8bd" stroke-width="2"/>
+<text x="720.0" y="1062.0" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-size="25" fill="#173d32">Local outbox</text>
+<text x="720.0" y="1093.0" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="#50685e">Approved .eml email copy</text>
+<rect x="40" y="100" width="280" height="75" rx="16" fill="#edf3ec" stroke="#b6c8bd" stroke-width="2"/>
+<text x="180.0" y="137.5" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-size="25" fill="#173d32">Voice note</text>
+<rect x="40" y="235" width="280" height="95" rx="16" fill="#edf3ec" stroke="#b6c8bd" stroke-width="2"/>
+<text x="180.0" y="267.0" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-size="25" fill="#173d32">Audio API</text>
+<text x="180.0" y="298.0" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="#50685e">English transcription</text>
+<rect x="40" y="400" width="280" height="75" rx="16" fill="#edf3ec" stroke="#b6c8bd" stroke-width="2"/>
+<text x="180.0" y="437.5" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-size="25" fill="#173d32">Journal notes</text>
+<rect x="40" y="550" width="280" height="105" rx="16" fill="#edf3ec" stroke="#b6c8bd" stroke-width="2"/>
+<text x="180.0" y="587.0" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-size="25" fill="#173d32">Embeddings API</text>
+<text x="180.0" y="618.0" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="#50685e">Retrieve relevant notes</text>
+<rect x="1100" y="100" width="300" height="75" rx="16" fill="#edf3ec" stroke="#b6c8bd" stroke-width="2"/>
+<text x="1250.0" y="137.5" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-size="25" fill="#173d32">Companion prompt</text>
+<rect x="1100" y="235" width="300" height="95" rx="16" fill="#edf3ec" stroke="#b6c8bd" stroke-width="2"/>
+<text x="1250.0" y="267.0" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-size="25" fill="#173d32">Images API</text>
+<text x="1250.0" y="298.0" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="#50685e">Generate visual preview</text>
+<rect x="1100" y="400" width="300" height="75" rx="16" fill="#edf3ec" stroke="#b6c8bd" stroke-width="2"/>
+<text x="1250.0" y="437.5" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-size="25" fill="#173d32">You choose the avatar</text>
+<rect x="1100" y="610" width="300" height="110" rx="16" fill="#edf3ec" stroke="#b6c8bd" stroke-width="2"/>
+<text x="1250.0" y="649.5" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-size="25" fill="#173d32">TfL JourneyResults</text>
+<text x="1250.0" y="680.5" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="#50685e">Travel plan, if requested</text>
+<text x="720" y="1184" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-size="25" fill="#50685e">Synthetic UK prototype. The agent cannot approve or send messages.</text>
+</svg>

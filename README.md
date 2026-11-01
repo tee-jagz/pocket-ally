@@ -24,26 +24,34 @@ Screens captured from isolated synthetic data.
 - Submit an incoming message. Pocket Ally finds relevant dated notes and prepares a supported result, or asks for missing information.
 - Inspect sources, edit the draft and approve the exact version saved to the local outbox.
 
-```mermaid
-flowchart TD
-    Message["Incoming message"] --> Facts["OpenAI Responses API<br/>validated facts"]
-    Message --> Route["OpenAI Decisions API<br/>bounded output route"]
-    Facts --> Agent["Agents SDK + Responses API<br/>preparation tools"]
-    Route --> Agent
-    Agent --> Context["Embeddings API<br/>relevant dated context"]
-    Journal["Journal"] --> Context
-    Context --> Result["Sourced reply, visit plan<br/>or paperwork"]
-    Result --> Review["User edits + exact approval"]
-    Review --> Outbox["Local .eml outbox"]
-    Voice["Voice note"] --> Audio["Audio API<br/>transcription"]
-    Audio --> Journal
-    Agent --> Travel["TfL JourneyResults<br/>requested travel plan"]
-    Travel --> Result
-    Prompt["Companion prompt"] --> Images["Images API<br/>visual preview"]
-    Images --> Choice["User chooses saved companion"]
-```
+![Pocket Ally workflow: API routing, transcription, retrieval, preparation and exact approval](docs/diagrams/workflow.png)
 
 The model has no approval or send tools. Sources remain reviewable, and editing invalidates prior approval.
+
+## Capabilities and fallbacks
+
+| API | Used for | Without it |
+|---|---|---|
+| Decisions API | Bounded output routing | Validated source routing |
+| Responses API + Agents SDK | Fact extraction, agent reasoning and tool calls | Labelled parsing and scripted preparation |
+| Audio API | English voice transcription; original audio retained | Saved recording and typed transcript |
+| Embeddings API | Relevant dated journal notes | Labelled keyword/topic matching |
+| Images API | Companion previews | Labelled local style preview |
+| TfL JourneyResults | Requested journey plans | Explicitly unavailable route or unverified estimate |
+
+OpenAI features can run while email stays local. See the [provider and fallback guide](docs/TECHNICAL.md#what-is-real-and-what-is-a-fallback) for configuration and limits.
+
+## Privacy and approval
+
+Use synthetic data only; the prototype provides no clinical advice. Enabled OpenAI features process relevant messages, notes, recordings or image prompts. Approval binds the exact recipient, subject, body and attachments; edits require new review, only configured throwaway recipients are allowed, and NHS addresses are blocked. [Safety details](docs/TECHNICAL.md#safety-and-source-fidelity).
+
+## Private phone access
+
+Install the PWA from private HTTPS using the browser's Add to Home Screen action. Access requires the configured host and a verified Tailscale identity or access session; only the public offline shell and packaged artwork are cached, never journal entries or API responses. [Phone setup](docs/TECHNICAL.md#private-phone-access-and-install).
+
+## Build and verification
+
+Built by one human with Codex, using tested tools and isolated synthetic provider checks. Automated checks cover source handling, replay safety and approvals; browser verification covers sourced replies, edits and local outbox copies. See [build evidence](CODEX.md) and the [architecture](docs/TECHNICAL.md#architecture).
 
 ## Quickstart
 

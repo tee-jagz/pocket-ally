@@ -1,0 +1,16 @@
+flowchart TD
+    Message["Incoming message"] --> Facts["OpenAI Responses API<br/>validated facts"]
+    Message --> Route["OpenAI Decisions API<br/>bounded output route"]
+    Facts --> Agent["Agents SDK + Responses API<br/>preparation tools"]
+    Route --> Agent
+    Agent --> Context["Embeddings API<br/>relevant dated context"]
+    Journal["Journal"] --> Context
+    Context --> Result["Sourced reply, visit plan<br/>or paperwork"]
+    Result --> Review["User edits + exact approval"]
+    Review --> Outbox["Local .eml outbox"]
+    Voice["Voice note"] --> Audio["Audio API<br/>transcription"]
+    Audio --> Journal
+    Agent --> Travel["TfL JourneyResults<br/>requested travel plan"]
+    Travel --> Result
+    Prompt["Companion prompt"] --> Images["Images API<br/>visual preview"]
+    Images --> Choice["User chooses saved companion"]
