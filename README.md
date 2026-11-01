@@ -1,6 +1,10 @@
 # Pocket Ally
 
-**A little less to carry.** A phone-first synthetic UK paperwork companion for adults and their partners. Five tabs separate the next decision, paperwork, journal, visual companion and demo inputs. Synthetic incoming messages trigger relevant preparation: a sourced check-in summary, an appointment plan, claim evidence or a changed visit. Each outgoing message requires its own exact approval.
+Pocket Ally is a phone-first companion for adults living with cancer and the partners supporting them.
+
+**A little less to carry.** Everyday journal notes and incoming messages help prepare sourced wellbeing replies, visit plans and paperwork. Pocket Ally automatically finds relevant dated context, keeps the original notes available and lets people edit and review the exact words before approving sharing.
+
+The current build is a synthetic UK prototype using fictional data. Approved demo emails are saved as local outbox copies; external email delivery is not demonstrated.
 
 Built during the DevDay Exchange London Community Hackathon, 1 November 2026. Solo project with Codex. No clinical advice, symptom interpretation, benefits calculation or real patient data.
 

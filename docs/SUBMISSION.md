@@ -1,5 +1,9 @@
 # Submission checklist: 1 November 2026, London
 
+Pocket Ally is a phone-first companion for adults living with cancer and the partners supporting them. It connects everyday journal notes and incoming messages with relevant dated context to prepare sourced wellbeing replies, visit plans and paperwork. People keep control of the words and review each exact draft before approving sharing.
+
+This submission demonstrates a synthetic UK prototype using fictional data. Approved email drafts become local outbox copies; no external email delivery is claimed.
+
 The [Builders Guide](https://warp-peach-ef6.notion.site/) was read through CUA on 1 November. Submit by **17:00 Europe/London** using the [event submission form](https://hack.outpostcrew.co/e/devday-hack-london-49b733). The four equally weighted criteria are the idea/usefulness, use of Codex, execution and demo clarity. Finalists have a two-minute presentation followed by one minute of questions.
 
 - [x] README describes the product, local setup and the work built during the event.

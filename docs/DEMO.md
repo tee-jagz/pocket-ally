@@ -1,10 +1,14 @@
 # Current 90-second demo plan
 
+Pocket Ally is a phone-first companion for adults living with cancer and the partners supporting them. Everyday journal notes and incoming messages become useful starting points for sourced wellbeing replies, visit plans and paperwork. Relevant dated context is found automatically, while the user can inspect the sources, edit the words and approve the exact draft.
+
+The current demo is a synthetic UK prototype with fictional data. Approval saves a local outbox copy; it does not demonstrate external email delivery.
+
 Use synthetic content only. Keep the working notes-to-reply journey central. For a weekly wellbeing reply, first add an explicitly labelled synthetic self-report about how the fictional person felt. Existing walking/stairs fixtures alone should lead to a missing-wellbeing question, not an invented answer. Do not silently inject notes or present text notes as recorded audio. The [Builders Guide](https://warp-peach-ef6.notion.site/) requires a video of at most 90 seconds, with submission by 17:00 Europe/London. Public upload and a current recording remain pending.
 
 | Time | Show | Short narration or overlay |
 |---|---|---|
-| 0–8s | Home and the Journal | “Pocket Ally turns everyday notes into the paperwork and replies people need.” |
+| 0–8s | Home and the Journal | “A phone-first companion for adults living with cancer and the partners supporting them.” |
 | 8–16s | A synthetic voice note, playable audio and its saved English transcript | “Voice becomes editable text, while the original recording stays available.” Overlay: `Audio transcription: gpt-4o-transcribe`. |
 | 16–22s | Saved generated companion, then Demo | “A familiar visual guide makes the work easier to follow.” Overlay: `Images API: saved generated companion`. |
 | 22–29s | Generate a natural weekly question, then Send to Pocket Ally | “A synthetic incoming email asks how the week has been.” Overlay: `gpt-6-luna: demo message only`. |
