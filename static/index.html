@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#234e48"><title>Pocket Ally · A little less to carry</title><link rel="stylesheet" href="/static/style.css"></head>
+<body>
+<header><a class="brand" href="/" aria-label="Pocket Ally home"><span class="brand-mark">p.</span> pocket ally</a><span class="demo-tag"><i></i> Synthetic demo</span></header>
+<main>
+ <div class="intro"><div><p class="eyebrow">YOUR PAPERWORK COMPANION</p><h1>A little less<br>to carry.</h1><p class="lede">One appointment email. The next few things,<br class="desktop"> taken care of together.</p></div><div class="mascot-scene"><span class="orbit one"></span><span class="orbit two"></span><div id="mascot" class="mascot idle" aria-hidden="true"><span class="ear left"></span><span class="ear right"></span><div class="creature"><span class="eyes"></span><span class="mouth"></span><span class="pocket"></span></div><span class="foot left"></span><span class="foot right"></span><span class="prop">✦</span></div><span class="mascot-label" id="mascot-label" role="status">Ready when you are</span></div></div>
+ <div class="welcome-strip"><span class="avatar">A</span><div><strong>Hello, Ade.</strong><span>Let’s make room for your day.</span></div><span class="privacy-pill">Paperwork only</span></div>
+ <section id="launch" class="launch card"><div><span class="step-number">01</span><div><h2>Start with one email</h2><p>Your synthetic UCLH attendance email is ready.<br>We’ll prepare everything. You decide what gets sent.</p></div></div><button id="start">Prepare my paperwork <span>↗</span></button></section>
+ <div id="progress" class="progress" role="status" aria-live="polite" hidden><span class="pulse"></span><span id="progress-label">Getting things ready…</span></div>
+ <div id="error" class="error" role="alert" hidden></div>
+ <div id="workspace" hidden>
+  <div class="section-heading"><h2>Your next steps</h2><span id="mode">Offline synthetic demo</span></div>
+  <div class="grid">
+   <section class="card appointment"><div class="card-heading"><span class="icon">▦</span><span class="tag">UP NEXT</span></div><h2>Your next appointment</h2><div id="appointment"></div><div id="calendar"></div><details><summary>Where did this come from?</summary><div id="provenance"></div><a href="/api/email" target="_blank" rel="noopener">Open source email ↗</a></details></section>
+   <section class="card claim"><div class="card-heading"><span class="icon">↗</span><span class="tag">TRAVEL COSTS</span></div><h2>A claim, without the chase</h2><div id="claim"></div></section>
+  </div>
+  <div class="section-heading review-heading"><div><p class="eyebrow">YOU’RE IN CONTROL</p><h2>Ready for your review</h2></div><span class="review-note">Nothing goes out without your say-so.</span></div>
+  <div id="drafts" class="grid drafts"></div>
+  <section class="card diary"><div class="diary-top"><div><p class="eyebrow">YOUR WORDS, KEPT CLOSE</p><h2>The diary remembers.</h2><p>When a form asks a big question, start with what you’ve already said.</p></div><span class="icon">≋</span></div><div class="question">“How do you manage stairs and walking?”</div><div id="answer"></div><div class="diary-foot"><span id="diary-mode"></span><button class="text-button" id="show-notes">Browse 3 source notes ↗</button></div></section>
+  <section class="record"><div class="section-heading"><h2>Today’s record</h2><span class="status-pill">Refund not yet confirmed</span></div><ol id="events"></ol></section>
+ </div>
+ <footer><span class="brand">pocket ally</span><p>Less admin. More room for you.</p><small>Synthetic data only · No clinical advice · Bank details never collected<br>Local hackathon demo · Please review all drafts before use.</small></footer>
+</main>
+<dialog id="note-dialog" aria-labelledby="note-date"><button class="dialog-close" aria-label="Close source note">×</button><p class="eyebrow">DIARY SOURCE</p><h2 id="note-date"></h2><nav class="note-nav"><button class="text-button" data-source="note-1">26 Oct · stairs</button><button class="text-button" data-source="note-2">27 Oct · walking</button><button class="text-button" data-source="note-3">28 Oct · manager</button></nav><p id="note-transcript"></p><audio id="note-audio" controls preload="metadata" aria-label="Synthetic source note recording"></audio><p id="audio-status" class="pending" role="status" hidden></p><p class="muted">Synthetic computer-spoken recording. Not a real patient’s voice.</p></dialog>
+<dialog id="attachment-dialog" class="attachment-dialog" aria-labelledby="attachment-title"><button id="attachment-close" class="dialog-close" aria-label="Close attachment review">×</button><p class="eyebrow">EXACT DRAFT ATTACHMENT</p><h2 id="attachment-title">Review attachment</h2><p class="muted">Synthetic draft only. Review the complete file before approving the email.</p><iframe id="attachment-preview" title="Exact attachment preview"></iframe><a id="attachment-download" class="small-link" target="_blank" rel="noopener">Open attachment in a separate tab ↗</a></dialog>
+<script src="/static/app.js"></script></body></html>

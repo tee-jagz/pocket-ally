@@ -1,0 +1,11 @@
+From: Ade Demo <ade@example.test>
+Subject: Fwd: UCLH attendance confirmation [SYNTHETIC]
+Message-ID: synthetic-attendance-001
+
+SYNTHETIC DEMO - not a real hospital letter
+Patient: Ade Demo
+Appointment attended: 2026-10-28 10:30
+Hospital: UCLH Macmillan Cancer Centre
+Department: Outpatient services
+Next appointment: 2026-11-11 14:00
+Please retain your attendance slip and travel receipts.

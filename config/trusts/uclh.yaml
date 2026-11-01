@@ -1,0 +1,14 @@
+id: uclh
+name: University College London Hospitals
+accepted_channel: email
+accepted_channels: [email, post]
+demo_channel: email
+destination_env: TEST_UCLH_EMAIL
+required_documents:
+  - attendance
+  - entitlement
+  - travel
+  - claim_form
+source: https://www.uclh.nhs.uk/patients-and-visitors/patient-information-pages/help-travel-costs
+verified_on: '2026-11-01'
+notes: UCLH requests its postal claim form. HC5(T) is a prepared draft; local demo pack only, not a verified complete real submission.
